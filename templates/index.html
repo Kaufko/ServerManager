@@ -1,0 +1,41 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-start">Sercaver</div>
+    <div class="header-center"></div>
+    <div class="header-end">
+      <a class="settings-link" href="/settings">
+        <img class="settings-image" src="/static/settings.png">
+      </a>
+    </div>
+  </header>
+  <main class="main">
+    <section class="content">
+      <div class="headline">
+        <h1>Servers</h1>
+      </div>
+      <div class="server-card-list">
+        <div class="server">
+          <div class="server-content">
+            <p class="server-name">Test1</p>
+            <p class="server-path">/etc/server</p>
+          </div>
+          <div class="server-other">
+            <p>CPU: 100%</p>
+            <p>RAM: 500mb</p>
+            <p>Network: 53Mb/s⬇ 23Mb/s⬆</p>
+            <p>Read: 280MB/s</p>
+            <p>Write: 530MB/s</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>

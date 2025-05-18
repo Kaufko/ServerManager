@@ -1,0 +1,13 @@
+Karte - name
+config.json
+VVVVVV
+Main (controls servers)
+-autodetect server path (detects folders)
+-Have a similar UI oo aternos
+-Servers (save server paths, Or save config paths and load UI from them)
+
+server config.json (per server)
+-main executable path (startup command)
+-mods / addons / plugins folderse (have this as extensions category with the user being able to create a extension list (such as mods plugins etc.) and have each type of extension in the list)
+-Server name
+-Server Favorited (will appear top)
