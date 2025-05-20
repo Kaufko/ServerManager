@@ -1,18 +1,32 @@
 import json
 import os
-if os.access("config.json", os.W_OK):  # Check write permission
-    print("Apache can write to this file")
-else:
-    print("Still no write access - check SELinux/AppArmor")
 
-def handle_change(form_dict):
+CONFIG_PATH = "/etc/servermanager/"
+
+def write_config(form_dict):
     try:
-        with open("config.json", "w") as config:
-            json.dump(form_dict, config, indent=4)
+        try:
+            with open(CONFIG_PATH+"config.json", "r") as config:
+                data = json.load(config)
+        except PermissionError:
+            raise Exception("Permission denied when writing to config file")
+        except:
+            data = {}
+            print("file is empty")
+        data.update(form_dict)
+        with open(CONFIG_PATH+"config.json", "w") as config:
+            json.dump(data, config, indent=4)
 
         return True
 
     except PermissionError:
         raise Exception("Permission denied when writing to config file")
     except Exception as e:
-        raise Exception(f"Failed to save settings: {str(e)}")
+        raise Exception(f"Failed to save config: {str(e)}")
+
+def get_config():
+    try:
+        with open(CONFIG_PATH+"config.json", 'r') as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}

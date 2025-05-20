@@ -1,5 +1,7 @@
 from flask import Flask, request, render_template, jsonify
 import json
+from settings import write_config, get_config
+from server_manager import load_servers
 
 app = Flask(__name__)
 
@@ -7,12 +9,17 @@ app = Flask(__name__)
 def home():
     return render_template("index.html")
 
+@app.route('/autoload-servers', methods=['POST'])
+def autoload_servers():
+    load_servers
+
 @app.route('/settings')
 def settings():
-    return render_template("settings.html")
+    config = get_config()
+    return render_template("settings.html", default_server_path=config.get('default_server_path'))
 
 @app.route('/submit-setting', methods=['POST'])
 def submit_settings():
-    with open('config.json', 'w') as f:
-        json.dump(request.form.to_dict(), f)
-    return render_template('settings.html')
+    write_config(request.form.to_dict())
+    config = get_config()
+    return render_template("settings.html", default_server_path=config.get('default_server_path'))
