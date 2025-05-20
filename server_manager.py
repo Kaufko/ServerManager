@@ -21,13 +21,34 @@ def load_servers():
                     except:
                         current_server_config = {}
                     current_server_config["name"] = item #server display name
-                    current_server_config["type"] = "" #game name etc,
-                    current_server_config["exec"] = "" #executable path
-                    current_server_config["icon"] = "" #icon to display
+                    current_server_config["type"] = "Unknown game type" #game name etc,
+                    current_server_config["path"] = config.get('default_server_path')+item #server path
+                    current_server_config["exec"] = "Unknown executable path" #executable path
+                    current_server_config["icon"] = "No icon" #icon to display
                     with open(server_config_path, 'w') as server_config:
                         json.dump(current_server_config, server_config, indent=4)
                     server_config.close()
 
-    write_config({"servers": list(servers["servers"])})  # ✅ Correct
+    write_config({"servers": list(servers["servers"])})
 
-load_servers()
+def get_servers():
+    config = get_config()
+    servers = []
+    for server_name in config.get('servers', []):
+        config_path = os.path.join(CONFIG_PATH, "server_configs", f"{server_name}.json")
+        try:
+            with open(config_path, 'r') as server_config:
+                server_data = json.load(server_config)
+                servers.append(server_data)
+            server_config.close()
+        except:
+            servers.append(
+                    {
+                        "name": server_name,
+                        "type": "Unknown",
+                        "path": "",
+                        "exec": "",
+                        "icon": ""
+                    }
+                )
+    return servers

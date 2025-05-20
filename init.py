@@ -1,13 +1,14 @@
 from flask import Flask, request, render_template, jsonify
 import json
 from settings import write_config, get_config
-from server_manager import load_servers
+from server_manager import load_servers, get_servers
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    servers = get_servers()
+    return render_template("index.html", servers=servers)
 
 @app.route('/autoload-servers', methods=['POST'])
 def autoload_servers():
