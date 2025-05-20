@@ -11,7 +11,8 @@ def home():
 
 @app.route('/autoload-servers', methods=['POST'])
 def autoload_servers():
-    load_servers
+    load_servers()
+    return render_template("index.html")
 
 @app.route('/settings')
 def settings():
