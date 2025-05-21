@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, redirect
 import json
 from settings import write_config, get_config
 from server_manager import load_servers, get_servers
@@ -13,7 +13,7 @@ def home():
 @app.route('/autoload-servers', methods=['POST'])
 def autoload_servers():
     load_servers()
-    return render_template("index.html")
+    return redirect('/')
 
 @app.route('/settings')
 def settings():
