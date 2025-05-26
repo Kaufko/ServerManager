@@ -10,7 +10,7 @@ def load_servers():
     servers = {"servers": set()}
     if config.get('default_server_path') is not None:
         for item in os.listdir(config.get('default_server_path')):  # lists all item names in the default server path
-            if os.path.isdir(os.path.join(config.get('default_server_path', item))): # passes only dirs
+            if os.path.isdir(os.path.join(config.get('default_server_path', item))):  # passes only dirs
                 if "servers" not in config or item not in config["servers"]:  # checks if item is in config (if yes skip)
                     # generate config and add to existing for each server
                     servers["servers"].add(os.path.basename(item))
@@ -19,7 +19,7 @@ def load_servers():
                         with open(server_config_path, 'r') as server_config:
                             current_server_config = json.load(server_config)
                         server_config.close()
-                    except:
+                    except Exception:
                         current_server_config = {}
                     current_server_config["name"] = item  # server display name
                     current_server_config["type"] = "Unknown game type"  # game name etc,
@@ -43,7 +43,7 @@ def get_servers():
                 server_data = json.load(server_config)
                 servers.append(server_data)
             server_config.close()
-        except:
+        except (FileNotFoundError, json.JSONDecodeError):
             servers.append(
                     {
                         "name": server_name,
