@@ -9,10 +9,10 @@ def load_servers():
     config = get_config()
     servers = {"servers": set()}
     if config.get('default_server_path') is not None:
-        for item in os.listdir(config.get('default_server_path')):  #lists all item names in the default server path
-            if os.path.isdir(os.path.join(config.get('default_server_path', item))): #passes only dirs
-                if "servers" not in config or item not in config["servers"]:  #checks if item is already in config (if yes skip)
-                    #generate config and add to existing for each server
+        for item in os.listdir(config.get('default_server_path')):  # lists all item names in the default server path
+            if os.path.isdir(os.path.join(config.get('default_server_path', item))): # passes only dirs
+                if "servers" not in config or item not in config["servers"]:  # checks if item is already in config (if yes skip)
+                    # generate config and add to existing for each server
                     servers["servers"].add(os.path.basename(item))
                     server_config_path = CONFIG_PATH+f"server_configs/{item}.json"
                     try:
@@ -21,11 +21,11 @@ def load_servers():
                         server_config.close()
                     except:
                         current_server_config = {}
-                    current_server_config["name"] = item  #server display name
-                    current_server_config["type"] = "Unknown game type"  #game name etc,
-                    current_server_config["path"] = config.get('default_server_path')+item  #server path
-                    current_server_config["exec"] = "Unknown executable path"  #executable path
-                    current_server_config["icon"] = "No icon"  #icon to display
+                    current_server_config["name"] = item  # server display name
+                    current_server_config["type"] = "Unknown game type"  # game name etc,
+                    current_server_config["path"] = config.get('default_server_path')+item
+                    current_server_config["exec"] = "Unknown executable path"
+                    current_server_config["icon"] = "No icon"
                     with open(server_config_path, 'w') as server_config:
                         json.dump(current_server_config, server_config, indent=4)
                     server_config.close()
