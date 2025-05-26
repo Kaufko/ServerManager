@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="cs-CZ">
+
+<head>
+  <link rel="stylesheet" href="../static/styles.css">
+  <title>Server Manager</title>
+  <meta lang="cs-CZ">
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-start">
+      <p>Sercaver</p>
+    </div>
+    <div class="header-center">
+
+    </div>
+    <div class="header-end">
+      <a class="settings-link" href="settings.html">
+        <img class="settings-image" src="/static/settings.png">
+      </a>
+    </div>
+  </header>
+  <main class="main">
+    <div class="headline">
+        <h2>{{ server.name }}</h2>
+      </div>
+    <section class="server-console-content">
+      
+      <div class="console">
+        <div class="logs">
+
+        </div>
+        <div class="seperator">
+
+        </div>
+        <div class="console-input" id="consoleInput">
+          <input>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>
+
+<script>
+  const input = document.getElementById('consoleInput')
+  
+  input.addEventListener('keydown', function(event) {
+    if(event.key === 'Enter') {
+      const inputData = input.innerText;
+      console.log(inputData)
+      fetch('/execute-command',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ inputData: inputData})
+      })
+      .then(data => {
+        input.innerText = '';
+      });
+    }
+  })
+</script>
