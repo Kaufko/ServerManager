@@ -11,7 +11,7 @@ def load_servers():
     if config.get('default_server_path') is not None:
         for item in os.listdir(config.get('default_server_path')):  # lists all item names in the default server path
             if os.path.isdir(os.path.join(config.get('default_server_path', item))): # passes only dirs
-                if "servers" not in config or item not in config["servers"]:  # checks if item is already in config (if yes skip)
+                if "servers" not in config or item not in config["servers"]:  # checks if item is in config (if yes skip)
                     # generate config and add to existing for each server
                     servers["servers"].add(os.path.basename(item))
                     server_config_path = CONFIG_PATH+f"server_configs/{item}.json"
