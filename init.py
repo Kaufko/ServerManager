@@ -26,5 +26,5 @@ def settings():
 def submit_settings():
     write_config(request.form.to_dict())
     config = get_config()
-    return render_template("settings.html", default_server_path=config.get('default_server_path')
+    return render_template("settings.html", default_server_path=config.get('default_server_path'))
     
