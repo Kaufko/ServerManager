@@ -1,4 +1,4 @@
 import pytest
 
 def works():
-  asset 1 == 1
+  assert 1 == 1
