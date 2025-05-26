@@ -1,4 +1,6 @@
-import pytest
+def inc(x):
+    return x + 2
 
-def works():
-  assert 1 == 1
+
+def test_answer():
+    assert inc(3) == 5
