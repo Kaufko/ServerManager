@@ -2,7 +2,9 @@ from flask import Flask, request, render_template, redirect
 from settings import write_config, get_config
 from server_manager import load_servers, get_servers
 
+
 app = Flask(__name__)
+
 
 @app.route('/')
 def home():
