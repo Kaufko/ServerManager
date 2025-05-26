@@ -3,6 +3,7 @@ import json
 
 CONFIG_PATH = "/etc/servermanager/"
 
+
 def write_config(form_dict):
     try:
         try:
