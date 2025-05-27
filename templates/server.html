@@ -23,12 +23,12 @@
   </header>
   <main class="main">
     <div class="headline">
-        <h2>{{ server.name }}</h2>
-      </div>
+      <h2>{{ server.name }}</h2>
+    </div>
     <section class="server-console-content">
-      
+
       <div class="console">
-        <div class="logs">
+        <div class="logs" id="output">
 
         </div>
         <div class="seperator">
@@ -45,22 +45,50 @@
 </html>
 
 <script>
+  SendMessageToLog("Creating websocket...")
+  const socket = new WebSocket("ws://localhost:8080");
+
   const input = document.getElementById('consoleInput')
-  
-  input.addEventListener('keydown', function(event) {
-    if(event.key === 'Enter') {
+
+  socket.addEventListener("open", (event) => {
+    SendMessageToLog(`Connection open: ${event.currentTarget}`);
+  })
+
+  socket.addEventListener("message", (event) => {
+    SendMessageToLog(event.data)
+  })
+
+  socket.addEventListener("close", (event) => {
+    SendMessageToLog(`Closed connection: ${event.reason}`)
+  })
+
+  socket.addEventListener("error", (event) => {
+    SendMessageToLog("Couldn't start websocket")
+  })
+
+  input.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
       const inputData = input.innerText;
       console.log(inputData)
-      fetch('/execute-command',{
+      fetch('/execute-command', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ inputData: inputData})
+        body: JSON.stringify({ inputData: inputData })
       })
-      .then(data => {
-        input.innerText = '';
-      });
+        .then(data => {
+          input.innerText = '';
+        });
     }
   })
+
+
+function SendMessageToLog(message)
+{
+  var line = document.createElement("p");
+  var output = document.getElementById('output');
+  line.appendChild(document.createTextNode(message));
+  output.appendChild(line);
+}
 </script>
